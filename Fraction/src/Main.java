@@ -37,5 +37,14 @@ public class Main {
         B.print();
         C.print();
         //System.out.println(C);
+
+        A.increment();
+        System.out.println("Increment: " + A);
+
+        B.decrement();
+        System.out.println("Decrement " + B);
+
+        int compareTo= A.compareTo(B);
+        System.out.println("CompareTo: " + compareTo);
     }
 }

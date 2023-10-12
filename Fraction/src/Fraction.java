@@ -142,4 +142,24 @@ public class Fraction {
         else if(integer == 0) System.out.print(0);
         System.out.println();
     }
+
+    public void increment() {
+        this.integer++;
+    }
+
+    public void decrement() {
+        this.integer--;
+    }
+
+    public int compareTo(Fraction other) {
+        double thisValue = this.integer + (double) this.numerator / this.denominator;
+        double otherValue = other.integer + (double) other.numerator / other.denominator;
+
+        return Double.compare(thisValue, otherValue);
+    }
+
+    public String toString() {
+        return integer + " (" + numerator + "/" + denominator + ")";
+    }
+
 }
