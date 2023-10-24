@@ -1,5 +1,9 @@
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main
 {
@@ -54,28 +58,14 @@ public class Main
         }
 
         save(group, "group.txt");*/
-        load("group.txt");
-    }
-    public static void save(Human[] group, String filename)throws IOException
-    {
-        File file = new File(filename);
-        System.out.println(file.getAbsoluteFile());
-        file.delete();
-        file.createNewFile();
-
-        FileWriter writer = new FileWriter(file);
-
-        for(int i = 0 ; i < group.length; i++)
+        Human[] group = load("group.txt");
+        System.out.println(group.length);
+        for(int i = 0; i < group.length; i++)
         {
-            writer.write(((Object)group[i]).getClass().getSimpleName() + ":\t" + group[i].toString() + ";");
-            writer.write('\n');
+            System.out.println(group[i]);
         }
-        writer.close(); //Потоки обязательно нужно закрывать
-
-        String command = "C:\\Program Files\\Notepad++\\notepad++ " + filename;
-
-        Process process = Runtime.getRuntime().exec(command);
     }
+
     public static Human[] load(String filename) throws FileNotFoundException {
         //Human[] group = null;
         ArrayList<Human> al_group = new ArrayList<>();
@@ -85,9 +75,10 @@ public class Main
         {
             String buffer = scanner.nextLine();
             if(buffer.isEmpty())continue;
-            String regex = "[:;,]\\s*";
-            String[] values = buffer.split(regex);
-
+            String[] values = buffer.split("[:,;]");
+            values[1] = values[1].replace("\t", "");
+            for(int i = 0; i < values.length; i++)
+                values[i].trim();
             //System.out.println(buffer);
 //            System.out.print(values.length + ":\t");
 //            for (int i = 0; i < values.length; i++) System.out.print(values[i] + "\t");
@@ -97,9 +88,11 @@ public class Main
             //System.out.println(((Object) member).getClass().getSimpleName());
             //al_group.add(HumanFactory.Create(values[0]));
             //al_group.get(al_group.size() - 1).init(values);
+            al_group.add(member);
         }
         scanner.close();    //Закрываем поток
         Human[] group = new Human[al_group.size()];
+        System.out.println(al_group.size());
         return al_group.toArray(group);
     }
 }
